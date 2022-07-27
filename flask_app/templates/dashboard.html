@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+  <!-- CSS only -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+        body {
+            background-image: url(../static/images/overhead-view-real-estate-office-desk.jpg);
+            background-size:cover;
+            background-size: 100%;
+        }
+    </style>
+    <nav class="d-flex justify-content-between align-items-center col-12 ">
+        <h3 class="text-center">{{user.first_name}} {{user.last_name}}</h3>
+        <div class="d-flex col-4 justify-content-around">
+            <a href="/new/property" class="btn btn-primary">Add</a>
+            <a href="/logout" class="btn btn-info" >Logout</a>
+        </div>
+    </nav>
+    <div class="col-4 mx-auto">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Long term</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for property in property %}
+                    <tr>
+                        <td>{{property.name}}</td>
+                        {% if property.under30 == 1 %}
+                        <td>Yes</td>
+                        {% else %}
+                        <td>No</td>
+                        {% endif %}
+                        <td>
+                            <a href="/property/{{property.id}}">View</a>
+                            {% if property.user_id == session.user_id %}
+                            <a href="/edit/property/{{property.id}}">Edit</a>
+                            <a href="/destroy/property/{{property.id}}">Delete</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>

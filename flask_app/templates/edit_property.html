@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit Property</title>
+   <!-- CSS only -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body style="background-image: url('/static/images/overhead-view-real-estate-office-desk.jpg');background-size:cover;
+background-size: 100%;">
+    <nav class="d-flex justify-content-between align-items-center col-12 ">
+        <h1 class="text-center">Edit</h1>
+        <div class="d-flex col-4 justify-content-around">
+            <a href="/dashboard" class="btn btn-primary">Dashboard</a>
+            <a href="/logout" class="btn btn-info" >Logout</a>
+        </div>
+    </nav>
+    <form action="/update/property" method="post" class="col-11 p-4 bg-dark text-light mx-auto">
+        {% with messages = get_flashed_messages(category_filter=["property"]) %}
+            {% if messages %}
+                <div class="alert alert-danger" role="alert">
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <div class="d-flex justify-content-between col-9">
+            <input type="hidden" name="id" value="{{edit.id}}">
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="name">Title:</label>
+                    <input type="text" name="name" value="{{edit.name}}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" name="description"  value="{{edit.description}}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="information">Information:</label>
+                    <textarea name="information" cols="30" rows="5"  value="{{edit.information}}" class="form-control">{{edit.information}}</textarea>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="date_made">Check-in date:</label>
+                    <input type="date" name="date_made"  value="{{edit.date_made}}" class="form-control">
+                </div>
+                <label for="under30">Long term?:</label>
+                {% if edit.under30 == 0 %}
+                <div class="input-group-text bg-dark">
+                    <input type="radio" name="under30" checked value="0" class="form-control" >
+                    <label for="0" class="text-warning">No</label>
+                </div>
+                {% else %}
+                <div class="input-group-text bg-dark">
+                    <input type="radio" name="under30"  value="0" class="form-control" >
+                    <label for="0" class="text-warning">No</label>
+                </div>
+                {% endif %}
+                {% if edit.under30 == 1 %}
+                <div class="input-group-text bg-dark">
+                    <input type="radio" name="under30" value="1" checked class="form-control">
+                    <label for="1" class="text-warning">Yes</label>
+                </div>
+                {% else %}
+                <div class="input-group-text bg-dark">
+                    <input type="radio" name="under30" value="1"  class="form-control">
+                    <label for="1" class="text-warning">Yes</label>
+                </div>
+                {% endif %}
+                <br>
+                <button class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
